@@ -30,5 +30,6 @@ model User {
   lastName String
   profilePic String
   userName String @unique
+  password String
   posts Post[]
 }

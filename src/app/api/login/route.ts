@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/app/lib';
-import jwt from 'jsonwebtoken';
 import { NextRequest, NextResponse } from 'next/server';
+import * as jose from 'jose';
 
 interface LoginRequest {
     email?: string;
@@ -87,10 +87,13 @@ export async function POST(req: NextRequest) {
         email: user.email,
     };
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET!, {
-        expiresIn: '2h',
-        algorithm: 'HS256',
-    });
+    const encodedSecret = new TextEncoder().encode(process.env.JWT_SECRET!);
+
+    const token = await new jose.SignJWT(payload)
+        .setProtectedHeader({ alg: 'HS256' })
+        .setIssuedAt()
+        .setExpirationTime('2h')
+        .sign(encodedSecret);
 
     // Set the HTTP Only Cookie containing the JWT to be used for future authenticated requests.
 
@@ -101,7 +104,7 @@ export async function POST(req: NextRequest) {
     };
 
     return NextResponse.json(resp, {
-        status: 401,
+        status: 200,
         headers: {
             'Content-Type': 'application/json',
             'Set-Cookie': `token=${token}; HttpOnly; Secure; Path=/; Max-Age=3600`,

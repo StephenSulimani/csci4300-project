@@ -1,5 +1,7 @@
+import { verifyAuth } from '@/app/helper';
 import { prisma } from '@/app/lib';
 import bcrypt from 'bcryptjs';
+import { NextRequest } from 'next/server';
 
 export async function GET() {
     // const user = await prisma.user.findFirst({

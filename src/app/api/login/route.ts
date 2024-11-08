@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { prisma } from '@/app/lib';
 import { NextRequest, NextResponse } from 'next/server';
 import * as jose from 'jose';
+import { createJWT } from '@/app/helper';
 
 interface LoginRequest {
     email?: string;
@@ -16,12 +17,7 @@ interface LoginResponse {
 }
 
 export async function POST(req: NextRequest) {
-    // const body = await getRawBody(req);
-    // res.setHeader('Content-Type', 'application/json');
-
     const data = (await req.json()) as LoginRequest;
-
-    console.log(data);
 
     if (!data.email) {
         const resp: LoginResponse = {
@@ -87,13 +83,7 @@ export async function POST(req: NextRequest) {
         email: user.email,
     };
 
-    const encodedSecret = new TextEncoder().encode(process.env.JWT_SECRET!);
-
-    const token = await new jose.SignJWT(payload)
-        .setProtectedHeader({ alg: 'HS256' })
-        .setIssuedAt()
-        .setExpirationTime('2h')
-        .sign(encodedSecret);
+    const token = await createJWT(payload);
 
     // Set the HTTP Only Cookie containing the JWT to be used for future authenticated requests.
 

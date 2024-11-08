@@ -1,8 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 import * as jose from 'jose';
 
+interface MiddlewareResponse {
+    error: number;
+    message: string;
+    success: number;
+}
+
+async function APImiddleware(req: NextRequest) {
+    try {
+        await req.json();
+        return NextResponse.next();
+    } catch {
+        const resp: MiddlewareResponse = {
+            error: 1,
+            message: 'Error parsing JSON.',
+            success: 0,
+        };
+        return NextResponse.json(resp, {
+            status: 400,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
+}
+
 export default async function middleware(req: NextRequest) {
-    console.log('Middleware');
+    if (req.nextUrl.pathname.startsWith('/api/')) {
+        return APImiddleware(req);
+    }
     const cookies = req.cookies;
 
     const token = cookies.get('token');
@@ -37,5 +64,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/auth/'],
+    matcher: ['/auth/', '/api/:path*'],
 };

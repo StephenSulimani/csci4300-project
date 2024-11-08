@@ -32,4 +32,5 @@ model User {
   userName String @unique
   password String
   posts Post[]
+  balance Float @default(0.0)
 }

@@ -16,6 +16,7 @@ datasource db {
 
 model Post {
   postid    String  @id @default(auto()) @map("_id") @db.ObjectId
+  title String
   price Float
   description String
   pic String

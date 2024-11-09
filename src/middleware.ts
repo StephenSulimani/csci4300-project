@@ -9,7 +9,9 @@ interface MiddlewareResponse {
 
 async function APImiddleware(req: NextRequest) {
     try {
-        await req.json();
+        if (req.method == 'POST') {
+            await req.json();
+        }
         return NextResponse.next();
     } catch {
         const resp: MiddlewareResponse = {

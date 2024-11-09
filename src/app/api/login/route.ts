@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
             success: 0,
         };
         return NextResponse.json(resp, {
-            status: 401,
+            status: 400,
             headers: { 'Content-Type': 'application/json' },
         });
     }

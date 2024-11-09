@@ -1,0 +1,109 @@
+openapi: 3.0.0
+servers:
+    - url: http://localhost:3000/api
+info:
+    title: Bulldawg Marketplace API
+    description: API for Bulldawg Marketplace Backend Functions
+    version: 1.0.0
+paths:
+    /ping:
+        get:
+            summary: Server Ping
+            description: Ensures that the API is functioning properly
+            responses:
+                '200':
+                    description: Pong
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    status:
+                                        type: integer
+                                        description: Whether the request was successful or not
+                                        example: 1
+                                    message:
+                                        type: string
+                                        description: A message indicating the server response
+                                        example: 'Pong!'
+    /login:
+        post:
+            summary: Login
+            description: Logs in using email/username and password.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    description: 'email@example.com'
+                                password:
+                                    type: string
+                                    description: 'password123'
+            responses:
+                '400':
+                    description: Invalid JSON body
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                MissingInfo:
+                                    value:
+                                        success: 0
+                                        message: 'Either email or username is required.'
+                                        error: 1
+                                InvalidJSON:
+                                    value:
+                                        success: 0
+                                        message: 'Error parsing JSON.'
+                                        error: 1
+                '401':
+                    description: Invalid credentials
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            example:
+                                success: 0
+                                message: 'The password is invalid.'
+                                error: 1
+                '200':
+                    description: Successful login
+                    headers:
+                        Set-Cookie:
+                            description: Authorization token to be used for future requests
+                            schema:
+                                type: string
+                                example: token=<token>; Path=/; HttpOnly;
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            example:
+                                success: 1
+                                message: 'Login Successful'
+                                error: 0
+
+components:
+    schemas:
+        Response:
+            type: object
+            properties:
+                success:
+                    description: Whether request was successful.
+                    type: integer
+                    enum:
+                        - 0
+                        - 1
+                message:
+                    description: Response message
+                    type: string
+                error:
+                    description: Whether an error occurred.
+                    type: integer
+                    enum:
+                        - 0
+                        - 1

@@ -1,8 +1,14 @@
 import { NextRequest } from 'next/server';
 import * as jose from 'jose';
 
-export async function verifyAuth(req: NextRequest): Promise<boolean> {
-    const token = req.cookies.get('token');
+interface AuthPayload extends jose.JWTPayload {
+    username: string;
+    email: string;
+}
+
+export async function verifyAuth(
+    req: NextRequest
+): Promise<boolean | AuthPayload> {
     const authHeader = req.headers.get('Authorization');
 
     if (!authHeader) {
@@ -13,8 +19,8 @@ export async function verifyAuth(req: NextRequest): Promise<boolean> {
 
     try {
         const encodedSecret = new TextEncoder().encode(process.env.JWT_SECRET);
-        await jose.jwtVerify(rawToken, encodedSecret);
-        return true;
+        const { payload } = await jose.jwtVerify(rawToken, encodedSecret);
+        return payload as AuthPayload;
     } catch {
         return false;
     }

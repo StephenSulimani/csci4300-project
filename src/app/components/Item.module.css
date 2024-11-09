@@ -1,0 +1,24 @@
+.item {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto; /* temp until grid */
+    flex-direction: column;
+}
+
+.title {
+    align-self: center;
+}
+
+.price {
+    align-self: end;
+}
+
+.price::before {
+    content: '$';
+}
+
+.image {
+    width: 70%;
+    height: auto;
+    align-self: center;
+}

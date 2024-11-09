@@ -1,7 +1,11 @@
 /** @type {import('next').NextConfig} */
 // import { PrismaClient } from '@prisma/client'
 
-const nextConfig = {};
+const nextConfig = {
+    images: {
+        domains: ['placecats.com'],
+    },
+};
 
 export default nextConfig;
 

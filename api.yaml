@@ -86,6 +86,136 @@ paths:
                                 success: 1
                                 message: 'Login Successful'
                                 error: 0
+    /register:
+        post:
+            summary: Register
+            description: Registers a new account.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    description: 'email@example.com'
+                                username:
+                                    type: string
+                                    description: 'exampleUser'
+                                password:
+                                    type: string
+                                    description: 'password123'
+                                firstName:
+                                    type: string
+                                    description: 'John'
+                                lastName:
+                                    type: string
+                                    description: 'Doe'
+                                profilePic:
+                                    type: string
+                                    description: 'Profile Photo URL (Optional)'
+            responses:
+                '400':
+                    description: Invalid JSON body
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                MissingInfo:
+                                    value:
+                                        success: 0
+                                        message: 'email, username, password, firstName, & lastName fields are required!'
+                                        error: 1
+                                InvalidJSON:
+                                    value:
+                                        success: 0
+                                        message: 'Error parsing JSON.'
+                                        error: 1
+                                ExistingUser:
+                                    value:
+                                        success: 0
+                                        message: '(Username <username>)/(Email <email>) is already in use.'
+                                        error: 1
+                '200':
+                    description: Successful registration
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                Success:
+                                    value:
+                                        success: 1
+                                        message: 'Registered successfully!'
+                                        error: 0
+    /post/create:
+        post:
+            summary: Create a Listing
+            description: Allows a user to list a new product for sale.
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                title:
+                                    type: string
+                                    example: Mercedes Benz Car
+                                price:
+                                    type: number
+                                    example: 43000
+                                description:
+                                    type: string
+                                    example: A lightly used German racing machine
+                                pic:
+                                    type: string
+                                    example: A URL to a photo for the listing
+            security:
+                - bearerAuth: []
+            responses:
+                '201':
+                    description: 'Successful Listing'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                Success:
+                                    value:
+                                        success: 1
+                                        message: 'Post created successfully!'
+                                        error: 0
+                '401':
+                    description: 'Unauthorized Request'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                Unauthorized:
+                                    value:
+                                        success: 0
+                                        message: 'Unauthorized Request.'
+                                        error: 0
+
+                '400':
+                    description: Invalid JSON body
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                MissingInfo:
+                                    value:
+                                        success: 0
+                                        message: 'title, price, pic, & description fields are required.'
+                                        error: 1
+                                InvalidJSON:
+                                    value:
+                                        success: 0
+                                        message: 'Error parsing JSON.'
+                                        error: 1
 
 components:
     schemas:

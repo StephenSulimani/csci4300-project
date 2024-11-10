@@ -1,5 +1,11 @@
 import axios from 'axios';
 
+/**
+ * Function to upload a Base64 encoded image to PostImages.org for storage.
+ *
+ * @param b64img - Base64 encoded image.
+ * @returns - Promise resolving to a string representing the direct URL for the image.
+ */
 export default async function UploadImg(b64img: string): Promise<string> {
     try {
         const session = axios.create();

@@ -1,6 +1,5 @@
 import { verifyAuth } from '@/app/helper';
 import { isPrismaError, prisma } from '@/app/lib';
-import { JWTPayload } from 'jose';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface CreatePostRequest {
@@ -29,7 +28,7 @@ interface CreatePostResponse {
 }
 
 export async function POST(req: NextRequest) {
-    const verified = await verifyAuth(req);
+    const verified = await verifyAuth();
 
     const data = await req.json();
 
@@ -86,7 +85,7 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        const post = await prisma.post.create({
+        await prisma.post.create({
             data: {
                 title: data.title,
                 price: data.price,

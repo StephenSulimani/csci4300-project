@@ -1,9 +1,8 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/app/lib';
 import { NextRequest, NextResponse } from 'next/server';
-import * as jose from 'jose';
 import { createJWT } from '@/app/helper';
+import { serialize } from 'cookie';
 
 interface LoginRequest {
     email?: string;
@@ -93,11 +92,18 @@ export async function POST(req: NextRequest) {
         success: 1,
     };
 
+    const tokenCookie = serialize('token', token, {
+        sameSite: true,
+        httpOnly: true,
+        path: '/',
+        maxAge: 3600,
+    });
+
     return NextResponse.json(resp, {
         status: 200,
         headers: {
             'Content-Type': 'application/json',
-            'Set-Cookie': `token=${token}; HttpOnly; Secure; Path=/; Max-Age=3600`,
+            'Set-Cookie': tokenCookie,
         },
     });
 }

@@ -1,25 +1,24 @@
-import { NextRequest } from 'next/server';
 import * as jose from 'jose';
+import { cookies } from 'next/headers';
 
 interface AuthPayload extends jose.JWTPayload {
     username: string;
     email: string;
 }
 
-export async function verifyAuth(
-    req: NextRequest
-): Promise<boolean | AuthPayload> {
-    const authHeader = req.headers.get('Authorization');
+export async function verifyAuth(): Promise<boolean | AuthPayload> {
+    const authCookie = cookies().get('token');
 
-    if (!authHeader) {
+    if (!authCookie) {
         return false;
     }
 
-    const rawToken = authHeader.replace('Bearer ', '');
-
     try {
         const encodedSecret = new TextEncoder().encode(process.env.JWT_SECRET);
-        const { payload } = await jose.jwtVerify(rawToken, encodedSecret);
+        const { payload } = await jose.jwtVerify(
+            authCookie.value,
+            encodedSecret
+        );
         return payload as AuthPayload;
     } catch {
         return false;

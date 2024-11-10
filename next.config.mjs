@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 // import { PrismaClient } from '@prisma/client'
 
-const nextConfig = {};
+const nextConfig = {
+    reactStrictMode: false
+};
 
 export default nextConfig;
 

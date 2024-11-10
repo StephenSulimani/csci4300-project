@@ -81,7 +81,6 @@ export async function POST(req: NextRequest) {
             },
         });
     } catch (error) {
-        console;
         if (isPrismaError(error)) {
             if (error.code == 'P2002') {
                 // Unique Constraint Failed

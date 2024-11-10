@@ -14,7 +14,7 @@ export default async function UploadImg(b64img: string): Promise<string> {
         formBody.append('numfiles', '1');
         formBody.append('upload_session', `${ts}`);
         formBody.append('upload_referer', 'aHR0cHM6Ly9wb3N0aW1nLmNjLw==');
-        // formBody.append('file', new Blob([b64img]));
+
         const byteCharacters = atob(b64img);
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {

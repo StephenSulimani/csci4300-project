@@ -29,9 +29,13 @@ async function APImiddleware(req: NextRequest) {
 }
 
 export default async function middleware(req: NextRequest) {
+    if (req.nextUrl.pathname.startsWith('/api/user/profilePic')) {
+        return NextResponse.next();
+    }
     if (req.nextUrl.pathname.startsWith('/api/')) {
         return APImiddleware(req);
     }
+
     const cookies = req.cookies;
 
     const token = cookies.get('token');

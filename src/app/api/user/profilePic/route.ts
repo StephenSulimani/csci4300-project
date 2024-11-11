@@ -9,7 +9,7 @@ export interface SetProfilePicResponse {
     error: number;
 }
 
-export async function POST(req: NextRequest) {
+export async function PATCH(req: NextRequest) {
     try {
         const verified = await verifyAuth();
 

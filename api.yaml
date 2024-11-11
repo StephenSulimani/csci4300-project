@@ -258,7 +258,7 @@ paths:
                                 type: string
                                 example: token=; Path=/; HttpOnly; SameSite=Strict; MaxAge=-1;
     /user/profilePic:
-        post:
+        patch:
             summary: Update Profile Picture
             description: Updates a users profile picture
             security:

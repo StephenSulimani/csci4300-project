@@ -257,6 +257,79 @@ paths:
                             schema:
                                 type: string
                                 example: token=; Path=/; HttpOnly; SameSite=Strict; MaxAge=-1;
+    /user/profilePic:
+        post:
+            summary: Update Profile Picture
+            description: Updates a users profile picture
+            security:
+                - cookieAuth: []
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            type: object
+                            properties:
+                                file:
+                                    type: string
+                                    format: base64
+                        encoding:
+                            file:
+                                contentType: image/png, image/jpeg
+
+            responses:
+                '200':
+                    description: Updated successfully
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                Success:
+                                    value:
+                                        success: 1
+                                        message: Successfully updated profile picture!
+                                        error: 0
+                '401':
+                    description: Unauthorized
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                Unauthorized:
+                                    value:
+                                        success: 0
+                                        message: Unauthorized Request
+                                        error: 1
+                '400':
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                MissingParameter:
+                                    value:
+                                        success: 0
+                                        message: 'The file parameter is required.'
+                                        error: 1
+                                MalformedRequest:
+                                    value:
+                                        success: 0
+                                        message: 'There was an error processing the form data.'
+                                        error: 1
+                '500':
+                    description: Server Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                ServerError:
+                                    value:
+                                        success: 0
+                                        message: User cannot be found.
+                                        error: 1
 
 components:
     schemas:

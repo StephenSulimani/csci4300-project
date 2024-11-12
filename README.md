@@ -12,6 +12,6 @@ pnpm dev
 
 ### TODO:
 
--   [] Fix Authentication
--   [] Add API endpoints to fetch products
--   [] Polish Frontend
+-   [ ] Fix Authentication
+-   [ ] Add API endpoints to fetch products
+-   [ ] Polish Frontend

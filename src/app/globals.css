@@ -7,12 +7,12 @@
     --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --background: #0a0a0a;
-        --foreground: #ededed;
-    }
-}
+/*@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}*/
 
 html,
 body {
@@ -43,4 +43,98 @@ a {
     html {
         color-scheme: dark;
     }
+}
+
+/* Stylesheet.css */
+
+/* General reset for padding, margin, and box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* Background and font colors based on the red, black, and grey color scheme */
+body {
+    background-color: #333333; /* Dark grey background */
+    color: white; /* Default text color */
+}
+
+/* Container for main app layout */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Form styling for add item, login, and register */
+form {
+    display: flex;
+    flex-direction: column;
+    background-color: #4c4c4c; /* Form background grey */
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    width: 100%;
+}
+
+form input,
+form textarea {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: #333333;
+    color: #ffffff;
+}
+
+form button {
+    padding: 10px;
+    font-size: 1rem;
+    color: white;
+    background-color: #ff4c4c; /* Bright red */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #cc0000; /* Darker red on hover */
+}
+
+/* Login and register modal styling */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4c4c4c;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.modal h2 {
+    color: #ffcccc;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Button styling */
+button {
+    background-color: #ff4c4c;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #cc0000;
 }

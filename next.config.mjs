@@ -2,7 +2,10 @@
 // import { PrismaClient } from '@prisma/client'
 
 const nextConfig = {
-    reactStrictMode: false
+    reactStrictMode: false,
+    images: {
+        domains: ['placecats.com', 'place.dog'],
+    },
 };
 
 export default nextConfig;

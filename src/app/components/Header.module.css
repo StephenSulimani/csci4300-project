@@ -1,0 +1,38 @@
+.header {
+    height: 30vh;
+    background-color: lightgray;
+    color: red;
+    font-family: cursive;
+    padding: 1em;
+}
+
+/* Header styling */
+.header {
+    width: 100%;
+    background-color: #4c4c4c; /* Light grey for header */
+    padding: 1rem;
+    text-align: center;
+    color: #ffffff;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .header nav {
+    margin-top: 10px;
+  }
+  
+  .header a,
+  .header button {
+    color: #ffffff;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 1rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .header a:hover,
+  .header button:hover {
+    color: #ff4c4c; /* Bright red for hover effect */
+  }

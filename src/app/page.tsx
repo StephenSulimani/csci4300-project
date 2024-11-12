@@ -5,7 +5,7 @@ import styles from './style.module.css';
 import Header from './components/Header';
 import Link from 'next/link';
 import ItemGrid from './components/ItemsGrid';
-import AddItem from './components/AddItem';
+import AddItem from './addItem/page';
 import Login from './login/page';
 import Register from './register/page';
 import { useState } from 'react';
@@ -108,26 +108,17 @@ const sampleItems: Item[] = [
 
 export default function Home() {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const handleLogout = () => setIsLoggedIn(false);
     
-    return (
-        <div className={styles.container}>
-            <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+    return (<>
+    <div className={styles.container}>
+            <Header />
         <Link href="/">
         <ItemGrid data={sampleItems} className='item-grid' />
         </Link>
-        <Link href="/login">
-        <Login onLogin={() => setIsLoggedIn(true)} />
-        </Link>
-        <Link href="/register">
-        <Register />
-        </Link>
-        <Link href="/add-item">
-        {isLoggedIn ? <AddItem /> : <Login onLogin={() => setIsLoggedIn(true)} />}
-        </Link>
             
         </div>
+    
+    </>
+        
     );
 }

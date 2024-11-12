@@ -1,22 +1,42 @@
+
 // Header.tsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './Header.module.css';
 import Link from 'next/link';
 
+/*
 interface HeaderProps {
-  isLoggedIn: boolean;
-  onLogout: () => void;
+  isLoggedInPrev?: boolean;
 }
 
-const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout }) => (
-  <header className={styles.header}>
+
+export function LoginInternal() {
+  let isLoggedInPrev = true;
+  console.log('gtfdg')
+}
+*/
+
+
+const Header: React.FC = () => {
+
+  function Logout() {
+    localStorage.setItem('isLoggedIn', 'false');
+    window.location.href = '/';
+  }
+
+  function isLoggedIn() {
+      return localStorage.getItem('isLoggedIn') === 'true';
+    // localStorage isn't defined on server so this needs to be fixed
+  }
+
+  return (<header className={styles.header}>
     <h1>Bulldawg Marketplace</h1>
     <nav>
       <Link href="/">Home</Link>
-      {isLoggedIn ? (
+      {isLoggedIn() ? (
         <>
-          <Link href="/add-item">Add Item</Link>
-          <button onClick={onLogout}>Logout</button>
+          <Link href="/addItem">Add Item</Link>
+          <Link href="/" onClick={() => { Logout(); }}>Logout</Link>
         </>
       ) : (
         <>
@@ -27,5 +47,7 @@ const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout }) => (
     </nav>
   </header>
 );
+}
+  
 
 export default Header;

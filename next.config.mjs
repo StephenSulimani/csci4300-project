@@ -3,7 +3,7 @@
 
 const nextConfig = {
     images: {
-        domains: ['placecats.com'],
+        domains: ['placecats.com', 'place.dog'],
     },
 };
 

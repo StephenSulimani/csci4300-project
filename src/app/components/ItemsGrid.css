@@ -6,3 +6,15 @@
     margin: 2rem;
     padding: 1rem;
 }
+
+
+/* Main item grid container */
+/*.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1400px;;
+  margin: 20px auto;
+  padding: 1rem;
+}*/

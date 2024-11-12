@@ -1,17 +1,31 @@
-import { ReactNode, useEffect } from 'react';
+// Header.tsx
+import React from 'react';
 import styles from './Header.module.css';
+import Link from 'next/link';
 
+interface HeaderProps {
+  isLoggedIn: boolean;
+  onLogout: () => void;
+}
 
-
-const Header = () => { // TODO: Pass in login state
-  //const classes = `card ${className}`; // Combine card class with additional classes
-
-//  useEffect(() => {
-//    console.log("users changed inside users")
-//  }, [data])
-  return (<div className={styles.header}>
+const Header: React.FC<HeaderProps> = ({ isLoggedIn, onLogout }) => (
+  <header className={styles.header}>
     <h1>Bulldawg Marketplace</h1>
-  </div>)
-  
-};
+    <nav>
+      <Link href="/">Home</Link>
+      {isLoggedIn ? (
+        <>
+          <Link href="/add-item">Add Item</Link>
+          <button onClick={onLogout}>Logout</button>
+        </>
+      ) : (
+        <>
+          <Link href="/login">Login</Link>
+          <Link href="/register">Sign Up</Link>
+        </>
+      )}
+    </nav>
+  </header>
+);
+
 export default Header;

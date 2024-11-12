@@ -1,7 +1,14 @@
+'use client'
+
 import Image from 'next/image';
 import styles from './style.module.css';
-import ItemsGrid from './components/ItemsGrid';
 import Header from './components/Header';
+import Link from 'next/link';
+import ItemGrid from './components/ItemsGrid';
+import AddItem from './components/AddItem';
+import Login from './login/page';
+import Register from './register/page';
+import { useState } from 'react';
 
 type Item = {
     id: number;
@@ -11,7 +18,7 @@ type Item = {
     image: string;
 }
 
-const ITEMS_LIST: Item[] = [
+const sampleItems: Item[] = [
     {
         id: 1,
         title: 'Notebook',
@@ -100,11 +107,26 @@ const ITEMS_LIST: Item[] = [
 
 
 export default function Home() {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLogout = () => setIsLoggedIn(false);
+    
     return (
         <div className={styles.container}>
-            <Header />
-            <br></br>
-            <ItemsGrid data={ITEMS_LIST} className='item-grid' />
+            <Header isLoggedIn={isLoggedIn} onLogout={handleLogout} />
+        <Link href="/">
+        <ItemGrid data={sampleItems} className='item-grid' />
+        </Link>
+        <Link href="/login">
+        <Login onLogin={() => setIsLoggedIn(true)} />
+        </Link>
+        <Link href="/register">
+        <Register />
+        </Link>
+        <Link href="/add-item">
+        {isLoggedIn ? <AddItem /> : <Login onLogin={() => setIsLoggedIn(true)} />}
+        </Link>
             
         </div>
     );

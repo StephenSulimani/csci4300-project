@@ -40,3 +40,169 @@ a {
     color-scheme: dark;
   }
 }
+
+/* Stylesheet.css */
+
+/* General reset for padding, margin, and box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Background and font colors based on the red, black, and grey color scheme */
+body {
+  background-color: #333333; /* Dark grey background */
+  color: white; /* Default text color */
+}
+
+/* Container for main app layout */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Header styling */
+header {
+  width: 100%;
+  background-color: #4c4c4c; /* Light grey for header */
+  padding: 1rem;
+  text-align: center;
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+header nav {
+  margin-top: 10px;
+}
+
+header a,
+header button {
+  color: #ffffff;
+  margin: 0 10px;
+  text-decoration: none;
+  font-size: 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+header a:hover,
+header button:hover {
+  color: #ff4c4c; /* Bright red for hover effect */
+}
+
+/* Main item grid container */
+.item-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1400px;;
+  margin: 20px auto;
+  padding: 1rem;
+}
+
+/* Card style for items */
+.card {
+  background-color: #660000; /* Dark red */
+  border-radius: 8px;
+  padding: 15px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #ffcccc; /* Light pinkish color */
+}
+
+.card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.card .price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #ff4c4c;
+  margin-top: 10px;
+}
+
+/* Form styling for add item, login, and register */
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: #4c4c4c; /* Form background grey */
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+}
+
+form input,
+form textarea {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: #333333;
+  color: #ffffff;
+}
+
+form button {
+  padding: 10px;
+  font-size: 1rem;
+  color: white;
+  background-color: #ff4c4c; /* Bright red */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #cc0000; /* Darker red on hover */
+}
+
+/* Login and register modal styling */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4c4c4c;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.modal h2 {
+  color: #ffcccc;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Button styling */
+button {
+  background-color: #ff4c4c;
+  color: #ffffff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #cc0000;
+}

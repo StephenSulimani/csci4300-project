@@ -174,7 +174,7 @@ const Login: React.FC = () => {
             <MainContainer>
                 <form onSubmit={handleSubmit}>
                     <input
-                        type="email"
+                        type="text"
                         placeholder="Username"
                         onChange={(e) => setEmail(e.target.value)}
                         required

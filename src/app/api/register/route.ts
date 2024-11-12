@@ -2,6 +2,7 @@ import { isPrismaError, prisma } from '@/app/lib';
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { createJWT } from '@/app/helper';
+import { serialize } from 'cookie';
 
 interface RegisterRequest {
     email: string;
@@ -73,11 +74,18 @@ export async function POST(req: NextRequest) {
 
         const token = await createJWT(payload);
 
+        const tokenCookie = serialize('token', token, {
+            sameSite: true,
+            httpOnly: true,
+            path: '/',
+            maxAge: 3600,
+        });
+
         return NextResponse.json(resp, {
             status: 200,
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
+                'Set-Cookie': tokenCookie,
             },
         });
     } catch (error) {

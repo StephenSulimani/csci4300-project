@@ -4,27 +4,23 @@
 const nextConfig = {
     reactStrictMode: false,
     images: {
-        domains: ['placecats.com', 'place.dog'],
+        remotePatterns: [
+            {
+                protocol: 'http',
+                hostname: 'placecats.com',
+                port: '',
+                pathname: '/*/*',
+                search: '',
+            },
+            {
+                protocol: 'http',
+                hostname: 'place.dog',
+                port: '',
+                pathname: '/*',
+                search: '',
+            },
+        ],
     },
 };
 
 export default nextConfig;
-
-// const prisma = new PrismaClient()
-// // use `prisma` in your application to read and write data in your DB
-
-// async function main() {
-//     const user = await prisma.user.create({
-//         data: {
-//             email: "blakevoyles2002@gmail.com",
-//             firstName: "Blake",
-//             lastName: "Voyles",
-//             profilePic : " ",
-//             userName: "blakeV"
-
-//         }
-//     });
-//     console.log(user)
-// }
-
-// main()

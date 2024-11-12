@@ -13,28 +13,28 @@
 //     const [error, setError] = useState('');
 
 //     const handleSubmit = async (e: React.FormEvent) => {
-//         e.preventDefault();
-//         if (!email || !password) {
-//             setError('Please fill in all fields');
-//             return;
-//         }
-//         const response = await fetch('/api/login', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: JSON.stringify({
-//                 email,
-//                 password,
-//             }),
-//         });
+// e.preventDefault();
+// if (!email || !password) {
+//     setError('Please fill in all fields');
+//     return;
+// }
+// const response = await fetch('/api/login', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//         email,
+//         password,
+//     }),
+// });
 
-//         if (response.status == 200) {
-//             router.push('/');
-//         } else {
-//             const data = await response.json();
-//             setError(data.message);
-//         }
+// if (response.status == 200) {
+//     router.push('/');
+// } else {
+//     const data = await response.json();
+//     setError(data.message);
+// }
 
 //         // Here you would typically handle the login logic
 //         // console.log('Login attempt with:', { email, password });
@@ -121,28 +121,72 @@
 
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MainContainer from '../components/MainContainer';
 import { default as Header } from '../components/Header';
+import useAuth from '../hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 const Login: React.FC = () => {
-    const handleSubmit = (e: React.FormEvent) => {
+    const router = useRouter();
+    const { isAuthenticated, loading } = useAuth();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        //LoginInternal(); idk
-        if (typeof window !== 'undefined') {
-            localStorage.setItem('isLoggedIn', 'true');
+        if (!email || !password) {
+            setError('Please fill in all fields');
+            return;
         }
-        window.location.href = '/';
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email,
+                password,
+            }),
+        });
+
+        if (response.status == 200) {
+            router.push('/');
+        } else {
+            const data = await response.json();
+            setError(data.message);
+        }
     };
+
+    useEffect(() => {
+        if (isAuthenticated && !loading) {
+            router.push('/');
+        }
+    }, [isAuthenticated, loading, router]);
+
+    if (loading || isAuthenticated) {
+        return <div></div>;
+    }
 
     return (
         <>
-            <Header />
+            <Header loggedIn={isAuthenticated} />
             <MainContainer>
                 <form onSubmit={handleSubmit}>
-                    <input type="text" placeholder="Username" required />
-                    <input type="password" placeholder="Password" required />
+                    <input
+                        type="email"
+                        placeholder="Username"
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
                     <button type="submit">Login</button>
+                    {error && <p className="text-red-400 text-sm">{error}</p>}
                 </form>
             </MainContainer>
         </>

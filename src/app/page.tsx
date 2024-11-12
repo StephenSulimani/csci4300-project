@@ -9,6 +9,7 @@ import AddItem from './addItem/page';
 import Login from './login/page';
 import Register from './register/page';
 import { useState } from 'react';
+import useAuth from './hooks/useAuth';
 
 type Item = {
     id: number;
@@ -106,10 +107,16 @@ const sampleItems: Item[] = [
 ];
 
 export default function Home() {
+    const { isAuthenticated, loading } = useAuth();
+
+    if (loading) {
+        return <></>;
+    }
+
     return (
         <>
             <div className={styles.container}>
-                <Header />
+                <Header loggedIn={isAuthenticated} />
                 <Link href="/">
                     <ItemGrid data={sampleItems} className="item-grid" />
                 </Link>

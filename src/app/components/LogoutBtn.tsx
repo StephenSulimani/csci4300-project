@@ -1,13 +1,21 @@
 import { LogOut } from 'lucide-react';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { usePathname } from 'next/navigation';
 
 interface LogoutBtnProps {
     router: AppRouterInstance;
 }
 
 export default function LogoutBtn(props: LogoutBtnProps) {
+    const pathName = usePathname();
     const LogOutClick = async () => {
         await fetch('/api/logout');
+
+        if (pathName == '/') {
+            window.location.reload();
+            return;
+        }
+
         props.router.push('/');
     };
 

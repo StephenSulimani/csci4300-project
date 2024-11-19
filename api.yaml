@@ -330,6 +330,45 @@ paths:
                                         success: 0
                                         message: User cannot be found.
                                         error: 1
+    /post:
+        get:
+            summary: Posts
+            description: Retrieves available listings.
+            responses:
+                '200':
+                    description: Request All Available Listings
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        description: Whether request was successful.
+                                        type: integer
+                                        enum:
+                                            - 0
+                                            - 1
+                                    message:
+                                        description: Available listings
+                                        type: object
+                                    error:
+                                        description: Whether an error occurred.
+                                        type: integer
+                                        enum:
+                                            - 0
+                                            - 1
+                '400':
+                    description: Request Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                RequestError:
+                                    value:
+                                        success: 0
+                                        message: 'There was an error processing this request.'
+                                        error: 0
 
 components:
     schemas:

@@ -153,12 +153,17 @@ paths:
         post:
             summary: Create a Listing
             description: Allows a user to list a new product for sale.
+            security:
+                - cookieAuth: []
             requestBody:
                 content:
-                    application/json:
+                    multipart/form-data:
                         schema:
                             type: object
                             properties:
+                                file:
+                                    type: string
+                                    format: base64
                                 title:
                                     type: string
                                     example: Mercedes Benz Car
@@ -168,11 +173,10 @@ paths:
                                 description:
                                     type: string
                                     example: A lightly used German racing machine
-                                pic:
-                                    type: string
-                                    example: A URL to a photo for the listing
-            security:
-                - cookieAuth: []
+
+                        encoding:
+                            file:
+                                contentType: image/png, image/jpeg
             responses:
                 '201':
                     description: 'Successful Listing'

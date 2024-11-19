@@ -1,24 +1,47 @@
 import { verifyAuth } from '@/app/helper';
 import { isPrismaError, prisma } from '@/app/lib';
+import UploadImg from '@/PostImg/request';
 import { NextRequest, NextResponse } from 'next/server';
 
 interface CreatePostRequest {
     title: string;
     price: number;
     description: string;
-    pic: string;
+    pic: File;
 }
 
-function isCreatePostRequest(obj: unknown): obj is CreatePostRequest {
-    return (
-        typeof obj === 'object' &&
-        obj !== null &&
-        'title' in obj &&
-        'price' in obj &&
-        typeof obj['price'] === 'number' &&
-        'description' in obj &&
-        'pic' in obj
-    );
+function isCreatePostRequest(obj: unknown): CreatePostRequest | null {
+    if (!(obj instanceof FormData)) {
+        return null;
+    }
+
+    // Retrieve values from FormData
+    const title = obj.get('title');
+    const price = obj.get('price');
+    const description = obj.get('description');
+    const pic = obj.get('pic');
+
+    // Check if the values exist and are of the correct type
+    if (
+        typeof title !== 'string' ||
+        typeof price !== 'string' ||
+        isNaN(Number(price)) ||
+        typeof description !== 'string' ||
+        !(pic instanceof File)
+    ) {
+        return null;
+    }
+
+    // Now that we've validated, construct the CreatePostRequest object
+    const createPostRequest: CreatePostRequest = {
+        title,
+        price: Number(price), // Convert the price from string to number
+        description,
+        pic, // Already a File type
+    };
+
+    // Return the validated and transformed CreatePostRequest
+    return createPostRequest;
 }
 
 interface CreatePostResponse {
@@ -30,7 +53,7 @@ interface CreatePostResponse {
 export async function POST(req: NextRequest) {
     const verified = await verifyAuth();
 
-    const data = await req.json();
+    const data = await req.formData();
 
     if (typeof verified === 'boolean') {
         const resp: CreatePostResponse = {
@@ -43,7 +66,9 @@ export async function POST(req: NextRequest) {
         });
     }
 
-    if (!isCreatePostRequest(data)) {
+    const validatedData = isCreatePostRequest(data);
+
+    if (!validatedData) {
         const resp: CreatePostResponse = {
             success: 0,
             message: 'title, price, pic, & description fields are required.',
@@ -85,12 +110,23 @@ export async function POST(req: NextRequest) {
             });
         }
 
+        const fileBytes = await validatedData.pic.arrayBuffer();
+
+        const b64img = btoa(
+            new Uint8Array(fileBytes).reduce(
+                (data, byte) => data + String.fromCharCode(byte),
+                ''
+            )
+        );
+
+        const imgURL = await UploadImg(b64img);
+
         await prisma.post.create({
             data: {
-                title: data.title,
-                price: data.price,
-                description: data.description,
-                pic: data.pic,
+                title: validatedData.title,
+                price: validatedData.price,
+                description: validatedData.description,
+                pic: imgURL,
                 userId: user.id,
             },
         });
@@ -115,6 +151,14 @@ export async function POST(req: NextRequest) {
                     status: 400,
                 });
             }
+        } else {
+            console.log(error);
+            const resp: CreatePostResponse = {
+                success: 0,
+                message: 'Unknown error',
+                error: 1,
+            };
+            return NextResponse.json(resp, { status: 500 });
         }
     }
 }

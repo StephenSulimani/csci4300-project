@@ -9,12 +9,20 @@ import { useRouter } from 'next/navigation';
 const AddItem: React.FC = () => {
     const router = useRouter();
     const { isAuthenticated, loading } = useAuth();
+    const [file, setFile] = useState<File | null>(null);
     const [formData, setFormData] = useState({
         title: '',
         description: '',
         price: '',
         image: '',
     });
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (!e.target.files) {
+            return;
+        }
+        setFile(e.target.files[0]);
+    };
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -26,11 +34,22 @@ const AddItem: React.FC = () => {
         });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(formData); // Logging form data, can be used to submit to backend in the future
-        alert('Form data received: \n\n' + JSON.stringify(formData));
-        setFormData({ title: '', description: '', price: '', image: '' });
+        const formDataObj = new FormData();
+        formDataObj.append('title', formData.title);
+        formDataObj.append('description', formData.description);
+        formDataObj.append('price', formData.price);
+        formDataObj.append('pic', file!);
+
+        const newPost = await fetch('api/post/create', {
+            method: 'POST',
+            body: formDataObj,
+        });
+
+        if (newPost.status == 201) {
+            router.push('/');
+        }
     };
 
     if (loading) {
@@ -69,13 +88,7 @@ const AddItem: React.FC = () => {
                         type={'number'}
                         step={'.01'}
                     />
-                    <input
-                        name="image"
-                        placeholder="Image URL"
-                        value={formData.image}
-                        onChange={handleChange}
-                        required
-                    />
+                    <input type="file" onChange={handleFileChange} required />
                     <button type="submit">Add Item</button>
                 </form>
             </MainContainer>

@@ -19,6 +19,20 @@ const nextConfig = {
                 pathname: '/*',
                 search: '',
             },
+            {
+                protocol: 'http',
+                hostname: 'i.postimg.cc',
+                port: '',
+                pathname: '/*/*',
+                search: '',
+            },
+            {
+                protocol: 'https',
+                hostname: 'i.postimg.cc',
+                port: '',
+                pathname: '/*/*',
+                search: '',
+            },
         ],
     },
 };

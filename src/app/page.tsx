@@ -4,121 +4,140 @@ import Image from 'next/image';
 import styles from './style.module.css';
 import Header from './components/Header';
 import Link from 'next/link';
-import ItemGrid from './components/ItemsGrid';
+import PostGrid from './components/ItemsGrid';
 import AddItem from './addItem/page';
 import Login from './login/page';
 import Register from './register/page';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAuth from './hooks/useAuth';
 
-type Item = {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    image: string;
-};
+import {Post} from './types/types';
 
-const sampleItems: Item[] = [
+const sampleItems: Post[] = [
     {
-        id: 1,
+        postid: crypto.randomUUID(),
         title: 'Notebook',
         description: 'A lined notebook for taking notes',
         price: 3.5,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 2,
+        postid: crypto.randomUUID(),
         title: 'Pen Set',
         description: 'A set of 5 black ink pens',
         price: 4.0,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 3,
+        postid: crypto.randomUUID(),
         title: 'Stapler',
         description: 'A basic office stapler',
         price: 7.0,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 4,
+        postid: crypto.randomUUID(),
         title: 'Paper Clips',
         description: 'Pack of 100 paper clips',
         price: 1.5,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 5,
+        postid: crypto.randomUUID(),
         title: 'Sticky Notes',
         description: 'A pack of sticky notes for reminders',
         price: 2.5,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 6,
+        postid: crypto.randomUUID(),
         title: 'Highlighters',
         description: 'Set of 4 assorted color highlighters',
         price: 5.0,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 7,
+        postid: crypto.randomUUID(),
         title: 'Scissors',
         description: 'Pair of scissors for office use',
         price: 3.0,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 8,
+        postid: crypto.randomUUID(),
         title: 'Tape Dispenser',
         description: 'A tape dispenser with one roll of tape',
         price: 6.0,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 9,
+        postid: crypto.randomUUID(),
         title: 'Binder',
         description: '1-inch binder for organizing documents',
         price: 4.5,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 10,
+        postid: crypto.randomUUID(),
         title: 'Envelope Pack',
         description: 'Pack of 25 envelopes',
         price: 3.75,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 11,
+        postid: crypto.randomUUID(),
         title: 'Calculator',
         description: 'Basic office calculator',
         price: 9.0,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
     {
-        id: 12,
+        postid: crypto.randomUUID(),
         title: 'Ruler',
         description: '12-inch ruler with both metric and imperial units',
         price: 2.25,
-        image: 'http://placecats.com/200/300',
+        pic: 'http://placecats.com/200/300',
+        purchased:false
     },
 ];
 
 export default function Home() {
     const { isAuthenticated, loading } = useAuth();
 
-    if (loading) {
+    /*if (loading) {
         return <></>;
-    }
+    }*/
+
+    const [items, setItems] = useState<Post[]>([]);
+
+    useEffect(() => {
+            fetch('/api/post')
+                .then((res) => res.json())
+                .then((data) => {
+                    setItems(data.message as Post[]);
+                });
+    }, [loading]);
+
+
+    
 
     return (
         <>
             <div className={styles.container}>
                 <Header loggedIn={isAuthenticated} />
                 <Link href="/">
-                    <ItemGrid data={sampleItems} className="item-grid" />
+                    <PostGrid data={items} className="item-grid" />
                 </Link>
             </div>
         </>

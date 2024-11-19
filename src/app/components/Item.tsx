@@ -3,15 +3,10 @@ import React from 'react';
 import Image from 'next/image';
 import styles from './Item.module.css';
 import Card from './Card';
+import { Post } from '../types/types';
 
 interface ItemProps {
-  item: {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    image: string;
-  };
+  item: Post;
 }
 
 const Item: React.FC<ItemProps> = ({ item }) => (
@@ -19,7 +14,12 @@ const Item: React.FC<ItemProps> = ({ item }) => (
     <div className={styles.title}>
       <h3>{item.title}</h3>
     </div>
-    <Image className={styles.image} src={item.image} alt={item.title} width={100} height={100} priority />
+    <Image className={styles.image} 
+    
+    //src={item.pic}
+    src = {'http://placecats.com/200/300'}
+    
+    alt={item.title} width={100} height={100} priority />
     <span className={styles.price}>${(+item.price).toFixed(2)}</span>
   </Card>
 );

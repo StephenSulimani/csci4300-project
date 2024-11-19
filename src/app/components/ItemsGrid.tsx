@@ -1,17 +1,10 @@
 import { ReactNode, useEffect } from 'react';
 import './ItemsGrid.css';
 import Item from './Item';
-
-type Item = {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    image: string;
-}
+import { Post } from '../types/types';
 
 interface ItemsGridProps {
-    data: Item[]
+    data: Post[]
     className?: string;
   }
 
@@ -23,7 +16,7 @@ const ItemsGrid: React.FC<ItemsGridProps> = ({ className = '', data }) => {
 //  }, [data])
   return <div className={className}>
     {data.map((item) => (
-        <Item key={item.id} item={item} />
+        <Item key={item.postid} item={item} />
       ))}
   </div>;
 };

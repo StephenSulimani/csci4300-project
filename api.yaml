@@ -431,6 +431,95 @@ paths:
                                         success: 0
                                         message: An unknown error has occurred.
                                         error: 1
+        patch:
+            summary: Update Post
+            description: Update a post by a specific id
+            parameters:
+                - name: id
+                  in: path
+                  description: The unique identifier for the post
+                  required: true
+                  schema:
+                      type: string
+            security:
+                - cookieAuth: []
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                title:
+                                    type: string
+                                    example: 'Maserati Car'
+                                price:
+                                    type: number
+                                    example: 3
+                                description:
+                                    type: string
+                                    example: 'A quite boring Italian sports car'
+                                pic:
+                                    type: string
+                                    example: 'https://i.postimg.cc/Jz2Lxq1r/image.png'
+            responses:
+                '200':
+                    description: Successful Request
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        description: Whether request was successful.
+                                        type: integer
+                                        enum:
+                                            - 0
+                                            - 1
+                                    message:
+                                        description: Updated post object
+                                        type: object
+                                    error:
+                                        description: Whether an error occurred.
+                                        type: integer
+                                        enum:
+                                            - 0
+                                            - 1
+                '400':
+                    description: Invalid ID
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                InvalidID:
+                                    value:
+                                        success: 0
+                                        message: The post could not be located.
+                                        error: 1
+                '500':
+                    description: Unknown Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                UnknownError:
+                                    value:
+                                        success: 0
+                                        message: An unknown error has occurred.
+                                        error: 1
+                '401':
+                    description: 'Unauthorized Request'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                Unauthorized:
+                                    value:
+                                        success: 0
+                                        message: 'Unauthorized Request.'
+                                        error: 0
 
 components:
     schemas:

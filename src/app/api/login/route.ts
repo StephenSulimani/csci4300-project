@@ -78,6 +78,7 @@ export async function POST(req: NextRequest) {
     }
 
     const payload = {
+        id: user.id,
         username: user.userName,
         email: user.email,
     };

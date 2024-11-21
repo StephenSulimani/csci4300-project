@@ -234,6 +234,9 @@ paths:
                             schema:
                                 type: object
                                 properties:
+                                    id:
+                                        type: string
+                                        example: 'jndagji7138'
                                     email:
                                         type: string
                                         example: 'email@example.com'

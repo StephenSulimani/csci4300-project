@@ -201,7 +201,7 @@ paths:
                                     value:
                                         success: 0
                                         message: 'Unauthorized Request.'
-                                        error: 0
+                                        error: 1
 
                 '400':
                     description: Invalid JSON body
@@ -519,7 +519,7 @@ paths:
                                     value:
                                         success: 0
                                         message: 'Unauthorized Request.'
-                                        error: 0
+                                        error: 1
 
 components:
     schemas:

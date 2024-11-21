@@ -38,7 +38,7 @@ export async function GET(
                     error: 1,
                 },
                 {
-                    status: 400,
+                    status: 401,
                 }
             );
         }

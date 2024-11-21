@@ -234,6 +234,9 @@ paths:
                             schema:
                                 type: object
                                 properties:
+                                    id:
+                                        type: string
+                                        example: 'jndagji7138'
                                     email:
                                         type: string
                                         example: 'email@example.com'
@@ -580,6 +583,88 @@ paths:
                                     value:
                                         success: 0
                                         message: 'Unauthorized Request.'
+                                        error: 1
+    /post/{id}/purchase:
+        summary: Purchase
+        description: Purchases an available item
+        get:
+            parameters:
+                - name: id
+                  in: path
+                  description: The unique identifier for the post
+                  required: true
+                  schema:
+                      type: string
+            security:
+                - cookieAuth: []
+            responses:
+                '200':
+                    description: Successful Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                InvalidID:
+                                    value:
+                                        success: 0
+                                        message: 'Purchase successful! Remaining balance: <remaining_balance>'
+                                        error: 1
+                '401':
+                    description: 'Unauthorized Request'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                Unauthorized:
+                                    value:
+                                        success: 0
+                                        message: 'Unauthorized Request.'
+                                        error: 1
+                                UnknownUser:
+                                    value:
+                                        success: 0
+                                        message: 'User cannot be found.'
+                                        error: 1
+                '400':
+                    description: Bad Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                OwnPost:
+                                    value:
+                                        success: 0
+                                        message: 'You cannot purchase your own post!'
+                                        error: 1
+                                UnknownPost:
+                                    value:
+                                        success: 0
+                                        message: 'Post cannot be found.'
+                                        error: 1
+                                InsufficientBalance:
+                                    value:
+                                        success: 0
+                                        message: 'You cannot afford this item.'
+                                        error: 1
+                                UpdateError:
+                                    value:
+                                        success: 0
+                                        message: 'Post canno tbe updated.'
+                                        error: 1
+                '500':
+                    description: Unknown Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                Unknown:
+                                    value:
+                                        success: 0
+                                        message: 'Unknown error occurred.'
                                         error: 1
 
 components:

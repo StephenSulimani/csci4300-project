@@ -2,6 +2,7 @@ import { verifyAuth } from '@/app/helper';
 import { NextResponse } from 'next/server';
 
 export interface MeResponse {
+    id: string;
     email: string;
     username: string;
 }
@@ -19,6 +20,7 @@ export async function GET() {
     }
 
     const resp: MeResponse = {
+        id: verified.id,
         email: verified.email,
         username: verified.username,
     };

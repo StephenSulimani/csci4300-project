@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 export default function useAuth() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [userId, setUserId] = useState('');
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -17,6 +18,8 @@ export default function useAuth() {
                 }
 
                 if (response.status == 200) {
+                    const data = await response.json();
+                    setUserId(data.id);
                     setIsAuthenticated(true);
                 }
             } catch (error) {
@@ -29,5 +32,5 @@ export default function useAuth() {
 
         checkAuth();
     }, []);
-    return { isAuthenticated, loading };
+    return { isAuthenticated, loading, userId };
 }

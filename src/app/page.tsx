@@ -136,9 +136,7 @@ export default function Home() {
         <>
             <div className={styles.container}>
                 <Header loggedIn={isAuthenticated} />
-                <Link href="/">
-                    <PostGrid data={items} className="item-grid" />
-                </Link>
+                <PostGrid data={items} className="item-grid" />
             </div>
         </>
     );

@@ -373,6 +373,64 @@ paths:
                                         success: 0
                                         message: 'There was an error processing this request.'
                                         error: 0
+    /post/{id}:
+        get:
+            summary: Get Post
+            description: Get specific post based on id
+            parameters:
+                - name: id
+                  in: path
+                  description: The unique identifier for the post
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: Successful Request
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    success:
+                                        description: Whether request was successful.
+                                        type: integer
+                                        enum:
+                                            - 0
+                                            - 1
+                                    message:
+                                        description: Post object
+                                        type: object
+                                    error:
+                                        description: Whether an error occurred.
+                                        type: integer
+                                        enum:
+                                            - 0
+                                            - 1
+                '400':
+                    description: Invalid ID
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                InvalidID:
+                                    value:
+                                        success: 0
+                                        message: The post could not be located.
+                                        error: 1
+                '500':
+                    description: Unknown Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                UnknownError:
+                                    value:
+                                        success: 0
+                                        message: An unknown error has occurred.
+                                        error: 1
 
 components:
     schemas:

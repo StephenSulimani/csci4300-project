@@ -19,15 +19,15 @@ interface RegisterResponse {
     success: number; // 1 if the registration is successful, 0 if there are issues.
 }
 
-function isRegisterRequest(data: any): data is RegisterRequest {
+function isRegisterRequest(data: unknown): data is RegisterRequest {
     return (
         typeof data === 'object' &&
         data !== null &&
-        typeof data.email === 'string' &&
-        typeof data.username === 'string' &&
-        typeof data.password === 'string' &&
-        typeof data.firstName === 'string' &&
-        typeof data.lastName === 'string'
+        typeof (data as RegisterRequest).email === 'string' &&
+        typeof (data as RegisterRequest).username === 'string' &&
+        typeof (data as RegisterRequest).password === 'string' &&
+        typeof (data as RegisterRequest).firstName === 'string' &&
+        typeof (data as RegisterRequest).lastName === 'string'
     );
 }
 

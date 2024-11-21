@@ -16,6 +16,7 @@ const Register: React.FC = () => {
     const [password, setPassword] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [error, setError] = useState('');
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) {
@@ -38,7 +39,12 @@ const Register: React.FC = () => {
             }),
         });
 
-        if (file) {
+        if (resp.status != 200) {
+            const respBody = await resp.json();
+            setError(respBody.message);
+        }
+
+        if (resp.status == 200 && file) {
             const fileFormData = new FormData();
             fileFormData.append('file', file);
 
@@ -49,7 +55,7 @@ const Register: React.FC = () => {
         }
 
         if (resp.status == 200) {
-            router.push('/');
+            router.push('/login');
         }
     };
 
@@ -110,6 +116,7 @@ const Register: React.FC = () => {
                     <label>Profile Pic</label>
                     <input type="file" onChange={handleFileChange} />
                     <button type="submit">Sign Up</button>
+                    <span>{error}</span>
                 </form>
             </MainContainer>
         </>

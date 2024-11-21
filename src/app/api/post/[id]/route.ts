@@ -100,9 +100,6 @@ export async function PATCH(
     { params }: { params: { id: string } }
 ) {
     const verified = await verifyAuth();
-
-    console.log(verified);
-
     if (typeof verified === 'boolean') {
         return NextResponse.json(
             {
@@ -166,6 +163,70 @@ export async function PATCH(
         const resp: GetPostResponse = {
             success: 1,
             message: post,
+            error: 0,
+        };
+
+        return NextResponse.json(resp, {
+            status: 200,
+        });
+    } catch (error) {
+        if (isPrismaError(error)) {
+            if (['P2015', 'P2023', 'P2025'].includes(error.code!)) {
+                const resp: GetPostResponse = {
+                    success: 0,
+                    message: 'The post could not be located.',
+                    error: 1,
+                };
+
+                return NextResponse.json(resp, {
+                    status: 400,
+                });
+            }
+        }
+        console.log(error);
+        const resp: GetPostResponse = {
+            success: 0,
+            message: 'An unknown error has occurred.',
+            error: 1,
+        };
+
+        return NextResponse.json(resp, {
+            status: 500,
+        });
+    }
+}
+
+export async function DELETE(
+    req: NextRequest,
+    { params }: { params: { id: string } }
+) {
+    const verified = await verifyAuth();
+    if (typeof verified === 'boolean') {
+        return NextResponse.json(
+            {
+                success: 0,
+                message: 'Unauthorized Request.',
+                error: 1,
+            },
+            {
+                status: 401,
+            }
+        );
+    }
+
+    const paramData = await params;
+
+    try {
+        await prisma.post.delete({
+            where: {
+                postid: paramData.id,
+                userId: verified.id,
+            },
+        });
+
+        const resp: GetPostResponse = {
+            success: 1,
+            message: 'Post deleted successfully',
             error: 0,
         };
 

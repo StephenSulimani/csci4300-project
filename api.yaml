@@ -520,6 +520,67 @@ paths:
                                         success: 0
                                         message: 'Unauthorized Request.'
                                         error: 1
+        delete:
+            summary: Delete Post
+            description: Delete a post by a specific id
+            parameters:
+                - name: id
+                  in: path
+                  description: The unique identifier for the post
+                  required: true
+                  schema:
+                      type: string
+            security:
+                - cookieAuth: []
+            responses:
+                '200':
+                    description: Successful Request
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                InvalidID:
+                                    value:
+                                        success: 0
+                                        message: Post deleted successfully.
+                                        error: 1
+                '400':
+                    description: Invalid ID
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                InvalidID:
+                                    value:
+                                        success: 0
+                                        message: The post could not be located.
+                                        error: 1
+                '500':
+                    description: Unknown Error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                UnknownError:
+                                    value:
+                                        success: 0
+                                        message: An unknown error has occurred.
+                                        error: 1
+                '401':
+                    description: 'Unauthorized Request'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Response'
+                            examples:
+                                Unauthorized:
+                                    value:
+                                        success: 0
+                                        message: 'Unauthorized Request.'
+                                        error: 1
 
 components:
     schemas:

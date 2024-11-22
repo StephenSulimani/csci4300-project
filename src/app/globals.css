@@ -138,3 +138,7 @@ button {
 button:hover {
     background-color: #cc0000;
 }
+
+.item-view {
+    width: 90vw;
+}

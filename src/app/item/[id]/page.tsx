@@ -39,7 +39,7 @@ const ItemPage = ({params: {id}}: ItemPageProps) => {
     <>
       <Header loggedIn={isAuthenticated} />
       <MainContainer>
-        <ExpandedItemView item={item} />
+        <ExpandedItemView item={item} classNm={'item-view'}/>
       </MainContainer>
     
     

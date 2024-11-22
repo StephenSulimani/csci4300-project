@@ -57,3 +57,14 @@
     transform: scale(1.05);
     transition: transform 0.3s;
   }
+
+
+  .admin-links {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .admin-links > a {
+    text-decoration: underline;
+    color: lightblue;
+  }

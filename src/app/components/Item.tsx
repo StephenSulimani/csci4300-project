@@ -9,11 +9,12 @@ import Link from 'next/link';
 
 interface ItemProps {
     item: Post;
+    showAdminLinks?: boolean;
 }
 
 
 
-const Item: React.FC<ItemProps> = ({ item }) => {
+const Item: React.FC<ItemProps> = ({ item, showAdminLinks }) => {
 
 
     const clickHandler = useRef<HTMLDivElement>(null);
@@ -23,7 +24,7 @@ const Item: React.FC<ItemProps> = ({ item }) => {
         router.push(`/item/${item.postid}`);
     });*/
     return (
-        <Link href={`/item/${item.postid}`}>
+        <Link href={showAdminLinks ? '#' : `/item/${item.postid}`} style={showAdminLinks ? {cursor: 'inherit'} : {}}>
         <Card className={styles.card}>
             <div className={styles.title}>
                 <h3>{item.title}</h3>
@@ -38,6 +39,11 @@ const Item: React.FC<ItemProps> = ({ item }) => {
                 priority
             />
             <span className={styles.price}>${(+item.price).toFixed(2)}</span>
+            {showAdminLinks && <div className={styles['admin-links']}>
+                <Link href={`/edit/${item.postid}`}>Edit</Link>
+                <Link href={`/delete/${item.postid}`}>Delete</Link>
+                </div>
+            }
         </Card>
         </Link>)
 };

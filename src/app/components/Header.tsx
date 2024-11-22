@@ -32,6 +32,7 @@ const Header: React.FC<HeaderProps> = ({ loggedIn }: HeaderProps) => {
                 {loggedIn ? (
                     <>
                         <Link href="/addItem">Add Item</Link>
+                        <Link href="/profile">Profile</Link>
                         <LogoutBtn router={router} />
                     </>
                 ) : (

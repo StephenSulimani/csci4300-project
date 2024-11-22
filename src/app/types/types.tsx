@@ -5,4 +5,6 @@ export interface Post {
     price: number;
     pic: string;
     purchased: boolean;
+    purchasedById: string;
+    userId: string;
 }

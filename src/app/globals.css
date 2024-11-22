@@ -34,10 +34,10 @@ body {
     margin: 0;
 }
 
-a {
+/*a {
     color: inherit;
     text-decoration: none;
-}
+}*/
 
 @media (prefers-color-scheme: dark) {
     html {
@@ -141,4 +141,13 @@ button:hover {
 
 .item-view {
     width: 90vw;
+}
+
+.delete-warning-container > *:not(button) {
+    font-size: 2em;
+    color: red;
+}
+
+.delete-warning-container  {
+    justify-content: center;
 }

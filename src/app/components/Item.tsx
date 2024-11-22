@@ -40,8 +40,8 @@ const Item: React.FC<ItemProps> = ({ item, showAdminLinks }) => {
             />
             <span className={styles.price}>${(+item.price).toFixed(2)}</span>
             {showAdminLinks && <div className={styles['admin-links']}>
-                <Link href={`/edit/${item.postid}`}>Edit</Link>
-                <Link href={`/delete/${item.postid}`}>Delete</Link>
+                <Link href={`/edit/${item.postid}`} className='text-blue-600 dark:text-blue-500 hover:underline'>Edit</Link>
+                <Link href={`/delete/${item.postid}`} className='text-blue-600 dark:text-blue-500 hover:underline'>Delete</Link>
                 </div>
             }
         </Card>

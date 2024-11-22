@@ -53,7 +53,8 @@ const AddItem: React.FC = () => {
     };
 
     if (loading) {
-        return <></>;
+        return <><Header loggedIn={true} />
+            <MainContainer><p>Loading...</p></MainContainer></>;
     }
 
     if (!isAuthenticated) {

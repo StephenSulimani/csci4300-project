@@ -65,7 +65,8 @@ const Register: React.FC = () => {
     }
 
     if (loading) {
-        return <></>;
+        return <><Header loggedIn={false} />
+            <MainContainer><p>Loading...</p></MainContainer></>;
     }
 
     return (

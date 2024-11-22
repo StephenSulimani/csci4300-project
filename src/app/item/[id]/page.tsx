@@ -25,13 +25,16 @@ const ItemPage = ({params: {id}}: ItemPageProps) => {
   }*/
 
   const [item, setItem] = useState<Post>();
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     fetch('/api/post/' + id)
         .then((res) => res.json())
         .then((data) => {
             setItem(data.message as Post);
-        });
+        }).then(() => {
+          setReady(true);
+        })
   }, [loading]);
 
 
@@ -39,7 +42,7 @@ const ItemPage = ({params: {id}}: ItemPageProps) => {
     <>
       <Header loggedIn={isAuthenticated} />
       <MainContainer>
-        <ExpandedItemView item={item} classNm={'item-view'}/>
+        {ready == false ? <><p>Loading...</p></> : <ExpandedItemView item={item!!} classNm={'item-view'}/>}
       </MainContainer>
     
     

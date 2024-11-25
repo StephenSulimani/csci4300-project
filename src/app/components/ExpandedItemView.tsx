@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { Post } from '../types/types';
 import Link from 'next/link';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../hooks/useAuth'; // Import the authentication hook
 import styles from './ExpandedItemView.module.css';
 
 interface ItemProps {
@@ -14,7 +14,7 @@ interface ItemProps {
 }
 
 const ExpandedItemView: React.FC<ItemProps> = ({ item, classNm, isView = true, isEdit, isDelete }) => {
-    const { userId, isAuthenticated } = useAuth();
+    const { userId, isAuthenticated } = useAuth(); // Use the auth hook to get user ID
     const [formData, setFormData] = useState({
         title: item.title,
         description: item.description,
@@ -37,19 +37,28 @@ const ExpandedItemView: React.FC<ItemProps> = ({ item, classNm, isView = true, i
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Prepare the form data with all fields
         const jsonBody = JSON.stringify({
             title: formData.title,
             description: formData.description,
-            price: formData.price,
+            price: parseFloat(formData.price) || item.price, // Default to original price if input is empty
         });
 
-        const editPost = await fetch('/api/post/' + item.postid, {
-            method: 'PATCH',
-            body: jsonBody,
-        });
+        try {
+            const editPost = await fetch('/api/post/' + item.postid, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' }, // Add headers
+                body: jsonBody,
+            });
 
-        if (editPost.status == 200) {
-            setItemEdited(true);
+            if (editPost.status === 200) {
+                setItemEdited(true);
+            } else {
+                console.error('Error editing item:', await editPost.text());
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
         }
     };
 
@@ -63,6 +72,7 @@ const ExpandedItemView: React.FC<ItemProps> = ({ item, classNm, isView = true, i
         setPurchaseStatus(null);
 
         try {
+            // Make a GET request to the backend with necessary query parameters
             const response = await fetch(`/api/post/${item.postid}/purchase?userId=${userId}`, {
                 method: 'GET',
             });

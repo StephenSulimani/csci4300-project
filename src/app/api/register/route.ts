@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 profilePic: data.profilePic,
+                balance: 10000
             },
         });
         const resp: RegisterResponse = {

@@ -87,11 +87,13 @@ const ExpandedItemView: React.FC<ItemProps> = ({
             );
 
             // Log the raw response for debugging
-            const text = await response.text();
-            console.log('Raw Response:', text);
+            // const text = await response.text();
+            // console.log('Raw Response:', text);
 
-            // Parse the response as JSON
-            const data = JSON.parse(text);
+            // // Parse the response as JSON
+            // const data = JSON.parse(text);
+
+            const data = await response.json();
 
             // Check if the purchase was successful
             if (data.status === 1) {

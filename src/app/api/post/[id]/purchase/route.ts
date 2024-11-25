@@ -66,7 +66,7 @@ export async function GET(
             return NextResponse.json(
                 {
                     status: 0,
-                    mesage: 'You cannot purchase your own post!',
+                    message: 'You cannot purchase your own post!',
                     error: 1,
                 },
                 {

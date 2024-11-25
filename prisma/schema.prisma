@@ -37,5 +37,5 @@ model User {
   password String
   posts Post[] @relation("OwnedPosts")
   purchasedPosts Post[] @relation("PurchasedPosts")
-  balance Float @default(1000.0)
+  balance Float @default(0.0)
 }

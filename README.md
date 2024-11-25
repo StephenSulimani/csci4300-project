@@ -1,7 +1,6 @@
 ## Bulldawg Marketplace
 
 By Timmy Thomas, Liam England, Blake Voyles, Stephen Sulimani
-DB TESTING
 
 ### Getting Started
 
